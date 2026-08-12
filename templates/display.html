@@ -15,9 +15,13 @@ body{display:grid;place-items:center}
 .slot{position:absolute;z-index:3;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:1.15cqw;isolation:isolate}
 .logo{position:absolute;inset:-10%;background-size:contain;background-position:center;background-repeat:no-repeat;opacity:.44;filter:grayscale(1) contrast(1.15);z-index:0}
 .slot::after{content:"";position:absolute;inset:3%;background:radial-gradient(circle at 50% 48%,rgba(0,0,0,.03),rgba(0,0,0,.54) 80%);z-index:1}
-.player{position:relative;z-index:2;width:92%;height:88%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 3%;}
-.school{font-weight:800;font-size:clamp(9px,.70cqw,15px);line-height:1.15;letter-spacing:-.02em;color:rgba(255,248,240,.93);text-shadow:0 2px 8px #000;margin-bottom:.46cqw;white-space:nowrap}
-.name{font-family:"Arial Black","Malgun Gothic",sans-serif;font-size:clamp(20px,2.22cqw,43px);font-weight:950;line-height:1;letter-spacing:-.065em;color:#f7f0e6;text-shadow:0 2px 1px #250000,0 3px 12px #000;white-space:nowrap}
+
+.player{position:absolute;z-index:2;inset:0;width:100%;height:100%;display:grid;grid-template-rows:auto auto;align-content:center;justify-items:center;text-align:center;row-gap:.34cqw;padding:0 4.5%;transform:translateY(.05cqw)}
+
+.school{width:100%;font-weight:800;font-size:clamp(9px,.73cqw,15px);line-height:1.12;letter-spacing:-.025em;color:rgba(255,248,240,.94);text-shadow:0 2px 8px #000;white-space:nowrap;text-align:center;overflow:visible}
+.school.long{font-size:clamp(8px,.62cqw,13px);letter-spacing:-.04em}
+
+.name{width:100%;font-family:"Arial Black","Malgun Gothic",sans-serif;font-size:clamp(24px,2.62cqw,52px);font-weight:950;line-height:1;letter-spacing:-.07em;color:#f7f0e6;text-shadow:0 2px 1px #250000,0 3px 12px #000;white-space:nowrap;text-align:center}
 .slot.empty .player{display:none}
 .slot.changed .player{animation:slotPop .62s cubic-bezier(.2,.9,.25,1)}
 .slot.changed::before{content:"";position:absolute;inset:4%;z-index:3;border:2px solid rgba(255,34,34,.92);box-shadow:0 0 18px rgba(255,0,0,.85),inset 0 0 12px rgba(255,0,0,.4);animation:flash .75s ease-out forwards}
@@ -49,19 +53,19 @@ body{display:grid;place-items:center}
 </head>
 <body>
 <main id="stage" class="stage">
-  <img id="bracketBg" class="bracket-bg" src="/static/bracket.png?v=20260813-2" alt="12강 대진표 배경">
+  <img id="bracketBg" class="bracket-bg" src="/static/bracket.png?v=20260813-3" alt="12강 대진표 배경">
   <div id="slots"></div>
   <div class="draw-layer">
     <div class="draw-wrap">
       <div class="draw-kicker">12강 PARTICIPANT DRAW</div>
       <div id="drawCard" class="draw-card">
         <div id="drawLogo" class="draw-logo"></div>
-        <img class="official-eyes" src="/static/brand_eyes.svg?v=20260813-2" alt="춤추전국시대 붉은 눈 로고">
+        <img class="official-eyes" src="/static/brand_eyes.svg?v=20260813-3" alt="춤추전국시대 붉은 눈 로고">
         <div class="draw-content"><div id="drawSchool" class="draw-school"></div><div id="drawName" class="draw-name"></div></div>
       </div>
     </div>
   </div>
-  <div class="netbadge" id="netbadge">LIVE RENDER · V2</div>
+  <div class="netbadge" id="netbadge">LIVE RENDER · V3</div>
   <div id="assetErr" class="asset-error">BACKGROUND ASSET LOAD ERROR<br><small>/static/bracket.png</small></div>
 </main>
 <script>
@@ -69,8 +73,8 @@ const P=[{"id":"hongjoi","name":"홍조이","school":"백석예술대학교","ce
 const byId=Object.fromEntries(P.map(x=>[x.id,x]));const slots=document.getElementById('slots');let prev=null,lastPick=null;
 for(let i=0;i<12;i++){const d=document.createElement('div');d.className='slot empty s'+i;d.innerHTML='<div class="logo"></div><div class="player"><div class="school"></div><div class="name"></div></div>';slots.appendChild(d)}
 const bracketBg=document.getElementById('bracketBg');bracketBg.addEventListener('error',()=>document.getElementById('assetErr').classList.add('on'));bracketBg.addEventListener('load',()=>document.getElementById('assetErr').classList.remove('on'));
-function render(s){const stage=document.getElementById('stage');stage.classList.toggle('mode-draw',s.mode==='draw'&&s.current_pick);const flat=[];s.matches.forEach(m=>flat.push(m[0]||null,m[1]||null));document.querySelectorAll('.slot').forEach((el,i)=>{const id=flat[i],old=prev?prev.flat[i]:null;el.classList.toggle('empty',!id);el.classList.remove('changed');if(id){const p=byId[id];el.querySelector('.school').textContent=p.school;el.querySelector('.name').textContent=p.name;el.querySelector('.logo').style.backgroundImage=`url(${p.logo}?v=2)`;if(id!==old){void el.offsetWidth;el.classList.add('changed')}}});if(s.current_pick){const p=byId[s.current_pick];document.getElementById('drawSchool').textContent=p.school;document.getElementById('drawName').textContent=p.name;document.getElementById('drawLogo').style.backgroundImage=`url(${p.logo}?v=2)`;if(lastPick!==s.current_pick){const c=document.getElementById('drawCard');c.classList.remove('reveal');void c.offsetWidth;c.classList.add('reveal');lastPick=s.current_pick}}prev={flat}}
-async function poll(){try{const r=await fetch('/api/state?ts='+Date.now(),{cache:'no-store'}),s=await r.json();render(s);document.getElementById('netbadge').textContent='LIVE RENDER · V2 · '+new Date().toLocaleTimeString('ko-KR',{hour12:false})}catch(e){document.getElementById('netbadge').textContent='RECONNECTING…'}setTimeout(poll,420)}poll();
+function render(s){const stage=document.getElementById('stage');stage.classList.toggle('mode-draw',s.mode==='draw'&&s.current_pick);const flat=[];s.matches.forEach(m=>flat.push(m[0]||null,m[1]||null));document.querySelectorAll('.slot').forEach((el,i)=>{const id=flat[i],old=prev?prev.flat[i]:null;el.classList.toggle('empty',!id);el.classList.remove('changed');if(id){const p=byId[id];el.querySelector('.school').textContent=p.school;const schoolEl=el.querySelector('.school');schoolEl.classList.toggle('long',p.school.length>=12);el.querySelector('.name').textContent=p.name;el.querySelector('.logo').style.backgroundImage=`url(${p.logo}?v=2)`;if(id!==old){void el.offsetWidth;el.classList.add('changed')}}});if(s.current_pick){const p=byId[s.current_pick];document.getElementById('drawSchool').textContent=p.school;document.getElementById('drawName').textContent=p.name;document.getElementById('drawLogo').style.backgroundImage=`url(${p.logo}?v=2)`;if(lastPick!==s.current_pick){const c=document.getElementById('drawCard');c.classList.remove('reveal');void c.offsetWidth;c.classList.add('reveal');lastPick=s.current_pick}}prev={flat}}
+async function poll(){try{const r=await fetch('/api/state?ts='+Date.now(),{cache:'no-store'}),s=await r.json();render(s);document.getElementById('netbadge').textContent='LIVE RENDER · V3 · '+new Date().toLocaleTimeString('ko-KR',{hour12:false})}catch(e){document.getElementById('netbadge').textContent='RECONNECTING…'}setTimeout(poll,420)}poll();
 document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='f')document.documentElement.requestFullscreen?.()});
 </script>
 </body></html>
