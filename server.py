@@ -8,7 +8,7 @@ BASE = Path(__file__).resolve().parent
 HOST = '0.0.0.0'
 PORT = int(os.environ.get('PORT', '10000'))
 PIN = os.environ.get('ADMIN_PIN', '0919')
-BUILD = 'RENDER-V3-FINAL-20260813'
+BUILD = 'RENDER-V4-CENTER-FIX-20260813'
 CENTRAL_ID = 'kimjinseo'
 PARTICIPANTS = json.loads((BASE/'participants.json').read_text(encoding='utf-8'))
 BY_ID = {p['id']: p for p in PARTICIPANTS}
