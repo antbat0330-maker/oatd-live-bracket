@@ -1,0 +1,86 @@
+[
+  {
+    "id": "hongjoi",
+    "name": "홍조이",
+    "school": "백석예술대학교",
+    "central": false,
+    "logo": "/static/logos/hongjoi.png"
+  },
+  {
+    "id": "kimkitae",
+    "name": "김기태",
+    "school": "상명대학교 미래교육원",
+    "central": false,
+    "logo": "/static/logos/kimkitae.png"
+  },
+  {
+    "id": "kimyumin",
+    "name": "김유민",
+    "school": "정화예술대학교",
+    "central": false,
+    "logo": "/static/logos/kimyumin.png"
+  },
+  {
+    "id": "sinbi",
+    "name": "신비",
+    "school": "서울호서예술실용전문학교",
+    "central": false,
+    "logo": "/static/logos/sinbi.png"
+  },
+  {
+    "id": "choigain",
+    "name": "최가인",
+    "school": "백제예술대학교",
+    "central": false,
+    "logo": "/static/logos/choigain.png"
+  },
+  {
+    "id": "choiseungwoo",
+    "name": "최승우",
+    "school": "동신대학교",
+    "central": false,
+    "logo": "/static/logos/choiseungwoo.png"
+  },
+  {
+    "id": "parksiha",
+    "name": "박시하",
+    "school": "한양대학교 미래인재교육원",
+    "central": false,
+    "logo": "/static/logos/parksiha.png"
+  },
+  {
+    "id": "jungseeun",
+    "name": "정세은",
+    "school": "국민대학교 미래인재교육원",
+    "central": false,
+    "logo": "/static/logos/jungseeun.png"
+  },
+  {
+    "id": "parkjinwoo",
+    "name": "박진우",
+    "school": "서울대학교",
+    "central": false,
+    "logo": "/static/logos/parkjinwoo.png"
+  },
+  {
+    "id": "gohyeju",
+    "name": "고혜주",
+    "school": "한국외국어대학교",
+    "central": false,
+    "logo": "/static/logos/gohyeju.png"
+  },
+  {
+    "id": "wiseongjae",
+    "name": "위성재",
+    "school": "서울시립대학교",
+    "central": false,
+    "logo": "/static/logos/wiseongjae.png"
+  },
+  {
+    "id": "kimjinseo",
+    "name": "김진서",
+    "school": "중앙대학교",
+    "central": true,
+    "logo": "/static/logos/kimjinseo.png"
+  }
+]

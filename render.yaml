@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: oatd-live-bracket
+    runtime: python
+    region: singapore
+    plan: free
+    buildCommand: echo "No build step required"
+    startCommand: python server.py
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: ADMIN_PIN
+        value: "0919"
